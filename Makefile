@@ -6,7 +6,7 @@
 #    By: gduron <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/19 20:14:23 by gduron            #+#    #+#              #
-#    Updated: 2017/05/23 13:02:10 by gduron           ###   ########.fr        #
+#    Updated: 2017/05/23 15:11:38 by gduron           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = fdf
 
 SRC = \
 main.c\
+do_line.c\
 \
 
 CC = -Wall -Werror -Wextra #-g -fsanitize=address
@@ -31,7 +32,7 @@ $(NAME): $(SRC)
 	@make -C Libft/
 	@echo "Compiling \033[92mMinilibx\033[0m..."
 	@make -C minilibx_macos/
-	@gcc -o $(NAME) $^ $(CC) -I $(HEADER) Libft/libft.a minilibx_macos/libmlx.a
+	@gcc -o $(NAME) $^ $(CC) -I $(HEADER) Libft/libft.a minilibx_macos/libmlx.a -framework OpenGL -framework AppKit
 	@echo "Compilation:\033[92m OK\033[0m"
 
 clean:
