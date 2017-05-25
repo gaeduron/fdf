@@ -6,7 +6,7 @@
 /*   By: gduron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:17:20 by gduron            #+#    #+#             */
-/*   Updated: 2017/05/25 13:34:38 by gduron           ###   ########.fr       */
+/*   Updated: 2017/05/25 15:47:55 by gduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int		**create_int_tab_from_str(int fd, int *y_len, int *x_len)
 	if (!(map = allocate_int_tab(*y_len, *x_len)))
 		return (0);
 	string_to_matrice(str, map);
+	free(str);
 	return (map);
 }
 
@@ -105,10 +106,11 @@ int		init_t_env(t_env *env, int fd)
 		return (0);
 	env->win_size_x = 2560;
 	env->win_size_y = 1396;
-	if (env->x_len > env->y_len)
-		env->seg = (env->win_size_x - env->top) / (env->x_len);
+	ft_printf("%d = (%d - %d) / (%d)\n", (env->win_size_x - env->top) / (env->x_len), env->win_size_x, env->top, env->x_len);
+	if (env->x_len >= env->y_len)
+		env->seg = (env->win_size_y - env->top) / (env->x_len * 2);
 	if (env->x_len < env->y_len)
-		env->seg = (env->win_size_y - env->top) / (env->y_len);
+		env->seg = (env->win_size_y - env->top) / (env->y_len * 2);
 	if (!(env->mlx = mlx_init()))
 		return (0);
 	if (!(env->win = mlx_new_window(env->mlx,

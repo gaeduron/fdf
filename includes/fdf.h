@@ -6,7 +6,7 @@
 /*   By: gduron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 15:12:40 by gduron            #+#    #+#             */
-/*   Updated: 2017/05/25 12:49:23 by gduron           ###   ########.fr       */
+/*   Updated: 2017/05/25 14:14:08 by gduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct	s_env
 
 void    do_line(t_env *env, t_point *a, t_point *b);
 void	do_fdf(int fd);
+void	draw_fdf(t_env *env, int y, int x);
 void	files_manager(int ac, char **av);
 int		main(int ac, char **av);
 int		init_t_env(t_env *env, int fd);

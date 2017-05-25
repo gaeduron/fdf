@@ -6,7 +6,7 @@
 #    By: gduron <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/19 20:14:23 by gduron            #+#    #+#              #
-#    Updated: 2017/05/25 11:42:01 by gduron           ###   ########.fr        #
+#    Updated: 2017/05/25 14:14:58 by gduron           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ files_manager.c\
 do_fdf.c\
 init_env.c\
 read_file_descriptor.c\
+draw_fdf.c\
 do_line.c\
 \
 

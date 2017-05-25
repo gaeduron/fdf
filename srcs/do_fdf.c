@@ -6,7 +6,7 @@
 /*   By: gduron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 13:54:39 by gduron            #+#    #+#             */
-/*   Updated: 2017/05/25 13:49:02 by gduron           ###   ########.fr       */
+/*   Updated: 2017/05/25 14:41:27 by gduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ void	do_fdf(int fd)
 		while (x < env.x_len)
 		{
 			ft_printf("map[%d][%d] = %d\n", y, x, env.map[y][x]);
-			//draw_fdf(env, x, y);
+			draw_fdf(&env, y, x);
 			x++;
 		}
 		y++;
 	}
-//	mlx_key_hook(env.win, close_tab, 0);
-//	mlx_loop(env.mlx);
-//	free_all(env);
+	mlx_key_hook(env.win, close_tab, 0);
+	mlx_loop(env.mlx);
+	free_all(&env);
 	return ;
 }
