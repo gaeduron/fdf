@@ -6,7 +6,7 @@
 #    By: gduron <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/19 20:14:23 by gduron            #+#    #+#              #
-#    Updated: 2017/05/23 15:11:38 by gduron           ###   ########.fr        #
+#    Updated: 2017/05/25 11:42:01 by gduron           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,10 @@ NAME = fdf
 
 SRC = \
 main.c\
+files_manager.c\
+do_fdf.c\
+init_env.c\
+read_file_descriptor.c\
 do_line.c\
 \
 
