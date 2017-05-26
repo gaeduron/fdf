@@ -6,13 +6,13 @@
 /*   By: gduron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 13:47:55 by gduron            #+#    #+#             */
-/*   Updated: 2017/05/24 13:52:01 by gduron           ###   ########.fr       */
+/*   Updated: 2017/05/26 18:51:17 by gduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	open_file(char *file_name)
+static	void	open_file(char *file_name, t_env *env)
 {
 	int fd;
 
@@ -22,15 +22,12 @@ void	open_file(char *file_name)
 		write(1, "error: file don't open\n", 24);
 		return ;
 	}
-	do_fdf(fd);
+	do_fdf(fd, env);
 	close(fd);
 }
 
-void	files_manager(int ac, char **av)
+void			files_manager(int ac, char **av, t_env *env)
 {
-	int i;
-
-	i = 1;
-	while (i < ac)
-		open_file(av[i++]);
+	ac = 1;
+	open_file(av[ac], env);
 }
