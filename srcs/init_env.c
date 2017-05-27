@@ -6,7 +6,7 @@
 /*   By: gduron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:17:20 by gduron            #+#    #+#             */
-/*   Updated: 2017/05/26 19:06:54 by gduron           ###   ########.fr       */
+/*   Updated: 2017/05/27 09:29:22 by gduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static	void	find_matrice_size_in_str(int *y_len, int *x_len, char *str)
 		if (str[i++] == '\n')
 			*y_len += 1;
 	}
+	!str[i] && str[i - 1] != '\n' ? *y_len += 1 : 0;
 	i = 0;
 	while (str[i] && str[i] != '\n')
 	{
