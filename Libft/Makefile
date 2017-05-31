@@ -5,14 +5,17 @@
 #                                                     +:+ +:+         +:+      #
 #    By: gduron <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/03/19 20:14:23 by gduron            #+#    #+#              #
-#*   Updated: 2017/04/04 02:21:32 by bduron           ###   ########.fr       *#
+#    Created: 2017/05/31 12:40:17 by gduron            #+#    #+#              #
+#    Updated: 2017/05/31 14:01:24 by gduron           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libft.a
+NAME            := libft.a
 
-SRC = \
+CC              := gcc
+FLAGS           := -Wall -Wextra -Werror #-fsanitize=address
+
+SRCS_FILES      :=  \
 ft_putchar.c \
 ft_putstr.c \
 ft_putnbr.c \
@@ -98,28 +101,39 @@ ft_printf_cvt_lc.c \
 ft_printf_cvt_ls.c \
 ft_printf_cvt_b.c \
 
-CC = -Wall -Werror -Wextra
+HEADERS_FILES   :=  libft.h			\
+					libftprintf.h	\
 
-OBJ = $(SRC:.c=.o)
+SRCS_PATH       := srcs/
+SRCS            := $(addprefix $(SRCS_PATH), $(SRCS_FILES))
 
-HEADER = includes
+OBJS_PATH       := objs/
+OBJS            := $(addprefix $(OBJS_PATH), $(SRCS_FILES:.c=.o))
 
-VPATH = ./srcs
+INCLUDES_PATH   := includes/
+INCLUDES        := -I $(INCLUDES_PATH)
+HEADERS         := $(addprefix $(INCLUDES_PATH), $(HEADERS_FILES))
+
+.PHONY: all clean fclean re compiling_msg
 
 all: $(NAME)
 
-$(NAME): $(SRC)
-	@gcc -c $^ $(CC) -I $(HEADER)
-	@ar rc $(NAME) $(OBJ)
+$(OBJS_PATH)%.o: $(SRCS_PATH)%.c $(HEADERS)
+	@mkdir $(OBJS_PATH) 2> /dev/null || true
+	@$(CC) $(FLAGS) $(INCLUDES) -o $@ -c $<
+
+$(NAME): $(OBJS)
+	@ar rc $(NAME) $(OBJS)
 	@ranlib $(NAME)
-	@echo "Compilation:\033[92m OK\033[0m"
+	@echo "libft:\033[92m linked\033[0m"
 
 clean:
-	@echo "Deleting:\033[33m *.o\033[0m"
-	@rm -f *.o
+	@echo "Cleaning:\033[33m *.o\033[0m"
+	@rm -f $(OBJS)
+	@rmdir $(OBJS_PATH) 2> /dev/null || true
 
 fclean: clean
-	@echo "Deleting:\033[33m $(NAME)\033[0m"
+	@echo "Cleaning:\033[33m libft.a\033[0m"
 	@rm -f $(NAME)
 
 re: fclean all

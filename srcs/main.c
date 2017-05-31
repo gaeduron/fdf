@@ -6,7 +6,7 @@
 /*   By: gduron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 12:51:56 by gduron            #+#    #+#             */
-/*   Updated: 2017/05/26 18:51:53 by gduron           ###   ########.fr       */
+/*   Updated: 2017/05/31 14:30:26 by gduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ static	void	get_flag(int ac, char **av, t_env *env)
 		env->perspective = av[5][0] == 'x' ? 0 : env->perspective;
 	env->size = ac > 6 ? ft_atoi(av[6]) : 1;
 	if (ac > 6)
-		env->size = av[6][0] == 'x' ? 1 : env->size;
+		env->size = av[6][0] == 'x' || env->size > 4 ? 1 : env->size;
 	env->zoom = ac > 7 ? ft_atoi(av[7]) : 0;
 	if (ac > 7)
-		env->zoom = av[7][0] == 'x' ? 0 : env->zoom;
+		env->zoom = av[7][0] == 'x' || env->zoom > 200 ? 0 : env->zoom;
 }
 
 int				main(int ac, char **av)

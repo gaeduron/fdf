@@ -6,7 +6,7 @@
 /*   By: gduron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/25 11:38:29 by gduron            #+#    #+#             */
-/*   Updated: 2017/05/26 19:24:47 by gduron           ###   ########.fr       */
+/*   Updated: 2017/05/31 14:37:30 by gduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,13 @@ static	unsigned char	*read_loop(unsigned char *dest,
 	unsigned int i;
 
 	buff[ret] = '\0';
-	if (buff[0] > 0x7f)
+	while (ret-- > 0)
 	{
-		ft_printf("Invalid input. Error\n");
-		exit(0);
+		if (buff[ret] > 0x7f || buff[ret] == 0)
+		{
+			ft_printf("Invalid input. Error\n");
+			exit(0);
+		}
 	}
 	if (!(dest = (unsigned char*)ft_strjoin((char *)dest, (char *)buff)))
 		exit(0);

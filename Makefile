@@ -5,57 +5,72 @@
 #                                                     +:+ +:+         +:+      #
 #    By: gduron <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/03/19 20:14:23 by gduron            #+#    #+#              #
-#    Updated: 2017/05/25 14:14:58 by gduron           ###   ########.fr        #
+#    Created: 2017/05/31 12:27:06 by gduron            #+#    #+#              #
+#    Updated: 2017/05/31 13:56:27 by gduron           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fdf
+NAME            := fdf
 
-SRC = \
-main.c\
-files_manager.c\
-do_fdf.c\
-init_env.c\
-read_file_descriptor.c\
-draw_fdf.c\
-do_line.c\
-\
+CC              := gcc
+FLAGS           := -Wall -Wextra -Werror#-fsanitize=address
 
-CC = -Wall -Werror -Wextra #-g -fsanitize=address
+SRCS_FILES      :=  files_manager.c			\
+					main.c					\
+					do_fdf.c				\
+					init_env.c				\
+					read_file_descriptor.c	\
+					draw_fdf.c				\
+					do_line.c				\
 
-OBJ = $(SRC:.c=.o)
+HEADERS_FILES   :=  fdf.h					\
 
-HEADER = includes
+SRCS_PATH       := srcs/
+SRCS            := $(addprefix $(SRCS_PATH), $(SRCS_FILES))
 
-VPATH = ./srcs
+OBJS_PATH       := objs/
+OBJS            := $(addprefix $(OBJS_PATH), $(SRCS_FILES:.c=.o))
 
-all: $(NAME)
+INCLUDES_PATH   := includes/
+INCLUDES        := -I $(INCLUDES_PATH)
+HEADERS         := $(addprefix $(INCLUDES_PATH), $(HEADERS_FILES))
 
-$(NAME): $(SRC)
-	@echo "Compiling \033[92mLibft\033[0m..."
-	@make -C Libft/
-	@echo "Compiling \033[92mMinilibx\033[0m..."
-	@make -C minilibx_macos/
-	@gcc -o $(NAME) $^ $(CC) -I $(HEADER) Libft/libft.a minilibx_macos/libmlx.a -framework OpenGL -framework AppKit
-	@echo "Compilation:\033[92m OK\033[0m"
+LIBFT_PATH      := libft/
+LIBFT_INCLUDES  := -I libft/includes
+LIBFT           := -L $(LIBFT_PATH) -lft
+MLX_PATH        := minilibx_macos/
+MLX_INCLUDES    := -I minilibx_macos/
+MLX             := -L $(MLX_PATH) -lmlx -framework OpenGL -framework AppKit
+MATH            := -lm
+
+.PHONY: all libft mlx clean fclean re
+
+all: libft mlx $(NAME)
+
+mlx:
+	@make -C $(MLX_PATH)
+
+libft:
+	@make -C $(LIBFT_PATH)
+
+$(OBJS_PATH)%.o: $(SRCS_PATH)%.c $(HEADERS) $(LIBFT_PATH)/libft.a
+	@mkdir $(OBJS_PATH) 2> /dev/null || true
+	@$(CC) $(FLAGS) $(INCLUDES) $(LIBFT_INCLUDES) $(MLX_INCLUDES) -o $@ -c $<
+
+$(NAME): $(OBJS)
+	@$(CC) $(FLAGS) $(LIBFT) $(MLX) $(MATH) $(OBJS) -o $@
+	@echo "fdf:\033[92m linked\033[0m"
 
 clean:
-	@echo "Deleting:\033[33m *.o\033[0m"
-	@make -C Libft/ clean
-	@make -C minilibx_macos/ clean
-	@rm -f *.o
+	@echo "Cleaning:\033[33m *.o\033[0m"
+	@make -C $(MLX_PATH) clean
+	@make -C $(LIBFT_PATH) clean
+	@rm -f $(OBJS)
+	@rmdir $(OBJS_PATH) 2> /dev/null || true
 
 fclean: clean
-	@echo "Deleting:\033[33m libft.a\033[0m"
-	@rm -f Libft/libft.a
-	@echo "Deleting:\033[33m libmlx.a\033[0m"
-	@rm -f minilibx_macos/libmlx.a
-	@echo "Deleting:\033[33m $(NAME)\033[0m"
-	@rm -f fdf
-
-t: all
-	@./fdf
-	@echo "Compilation (main):\033[92m OK\033[0m"
+	@echo "Cleaning:\033[33m $(NAME)\033[0m"
+	@make -C $(LIBFT_PATH) fclean
+	@rm -f $(NAME)
 
 re: fclean all
